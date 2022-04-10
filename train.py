@@ -18,19 +18,19 @@ train_datagen = tf.keras.preprocessing.image.ImageDataGenerator(
 test_datagen = tf.keras.preprocessing.image.ImageDataGenerator(rescale=1./255)
 
 train_ds = train_datagen.flow_from_directory(
-        '/media/aro/New Volume/Datasets/Autism/archive/train',
+        '/Autism/archive/train',
         target_size= image_size,
         batch_size= batch_size,
         class_mode='binary')
 
 Valid_ds = test_datagen.flow_from_directory(
-        '/media/aro/New Volume/Datasets/Autism/archive/valid',
+        '/Autism/archive/valid',
         target_size= image_size,
         batch_size=batch_size,
         class_mode='binary')
 
 test_ds = test_datagen.flow_from_directory(
-       '/media/aro/New Volume/Datasets/Autism/archive/test',
+       'Autism/archive/test',
         target_size= image_size,
         batch_size=batch_size,
         class_mode='binary')
