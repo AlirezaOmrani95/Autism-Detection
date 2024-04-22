@@ -9,3 +9,5 @@ To download the data, you can click on the link below:
 To download the best weight, you can click on the link below:
 
 [Google Drive](https://drive.google.com/drive/folders/1aYxVtVVZX6XV9tELmNhsSHEYg2t8zbCC?usp=sharing)
+
+Please put the pth file in a folder named "weight" and put the folder in the main branch. 
