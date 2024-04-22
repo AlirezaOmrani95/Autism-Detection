@@ -4,8 +4,8 @@ This Project is for distinguishing autistic people from non-autistic ones based 
 
 To download the data, you can click on the link below:
 
-[Kaggle Webpage] (https://www.kaggle.com/discussions/general/123978)
+[Kaggle Webpage](https://www.kaggle.com/discussions/general/123978)
 
 To download the best weight, you can click on the link below:
 
-[Google Drive] (https://drive.google.com/drive/folders/1aYxVtVVZX6XV9tELmNhsSHEYg2t8zbCC?usp=sharing)
+[Google Drive](https://drive.google.com/drive/folders/1aYxVtVVZX6XV9tELmNhsSHEYg2t8zbCC?usp=sharing)
