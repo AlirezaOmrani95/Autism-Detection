@@ -25,21 +25,25 @@ pip install -r requirements.txt
 3. Download the best weight from [here](https://drive.google.com/drive/folders/1aYxVtVVZX6XV9tELmNhsSHEYg2t8zbCC?usp=sharing)
 
 **Dataset**
+
 The dataset can be accessed from [here](https://www.kaggle.com/discussions/general/123978)
 
 **Test the model**
+
 To run the test script:
 ```bash
 python test.py
 ```
 
 **Train the model**
+
 To run the train script, you need to first change the values in the config.py, and then run the following script:
 ```bash
 python train.py
 ```
 
 **Use Explainability**
+
 To run the explainability, you need to run the following script:
 ```bash
 python explainability.py
