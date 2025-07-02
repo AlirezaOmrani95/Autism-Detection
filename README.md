@@ -15,34 +15,34 @@ This project leverages machine learning techniques to detect autism spectrum dis
 
 ## 🧪 How to Run the Testing Pipeline
 1. Clone the repository:
-    ```bash
-    git clone https://github.com/yourusername/Autism-Detection.git
-    ```
+```bash
+git clone https://github.com/yourusername/Autism-Detection.git
+```
 2. Install dependencies:
-    ```bash
-    pip install -r requirements.txt
-    ```
+```bash
+pip install -r requirements.txt
+```
 3. Download the best weight from [here](https://drive.google.com/drive/folders/1aYxVtVVZX6XV9tELmNhsSHEYg2t8zbCC?usp=sharing)
 
 **Dataset**
 The dataset can be accessed from [here](https://www.kaggle.com/discussions/general/123978)
 **Test the model**
 To run the test script:
-    ```bash
-    python test.py
-    ```
+```bash
+python test.py
+```
 
 **Train the model**
 To run the train script, you need to first change the values in the config.py, and then run the following script:
-    ```bash
-    python train.py
-    ```
+```bash
+python train.py
+```
 
 **Use Explainability**
 To run the explainability, you need to run the following script:
-    ```bash
-    python explainability.py
-    ```
+```bash
+python explainability.py
+```
 
 ## Project Structure
 
