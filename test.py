@@ -1,60 +1,78 @@
-import torch, torch.nn as nn
-import torchvision as tv
-from torch.utils.data import DataLoader
-from torchmetrics import Accuracy
-from utils import load_model
-import numpy as np
+"""
+File: test.py
+Author: Ali Reza (Aro) Omrani
+Email: ali.omrani@example.com
+Date: 2023-10-15
+
+Description:
+-----------
+This script is used to test a pre-trained Vision Transformer (ViT) model on a
+dataset for autism detection. It loads the model, applies the necessary
+transformations to the input data, and evaluates the model's performance on
+the test set.
+
+Functions:
+---------
+- main: The main function that orchestrates the testing process, including
+    loading the model, preparing the test data, and calculating the accuracy.
+
+Requirements:
+------------
+- torch: For building and evaluating the model.
+"""
+
+# Import built-in libraries
 import os
-from tqdm import tqdm
-import pandas as pd
+from typing import Literal
 
-torch.cuda.manual_seed(1)
-torch.manual_seed(1)
-np.random.seed(1)
+# Import third-party libraries
+import torch, torch.nn as nn
+from torch.utils.data import DataLoader
 
-def test(model, dataloader, accuracy, device):
-    model.eval()
-    acc_lst = []
-    with torch.inference_mode():
-        for batch_idx, batch_data in enumerate(dataloader,1):
-            inputs, labels = batch_data
-            inputs, labels = inputs.to(device), labels.to(device)
-            
-            logits = model(inputs).squeeze()
-            preds_probs = torch.softmax(logits,dim=1)
-            preds = torch.argmax(preds_probs,dim=1)
-            
-            acc = accuracy(labels,preds)
-                    
-            acc_lst.append(acc.item())
-    return np.mean(acc_lst)
-
-if __name__ == '__main__':
-    general_params = {
-        'device':'cuda' if torch.cuda.is_available() else 'cpu',
-        'root_path': r'./dataset',
-        'weight_path': './weight/best_model.pth'
-    }
-
-    model_params = {
-        'accuracy': Accuracy('multiclass',num_classes=2).to(general_params['device']),
-
-        'batch size': 32
-    }
-
-    print(general_params['device'])
-
-    model,auto_transform = load_model(2)
-
-    dataset = tv.datasets.ImageFolder(root = os.path.join(general_params['root_path'],'test'), transform = auto_transform)
-    data_loader = DataLoader(dataset = dataset, batch_size= model_params['batch size'])
-    
-    model = model.to(general_params['device'])
-    model.load_state_dict(torch.load(general_params['weight_path']))
-
-    test_acc = test(model, data_loader, model_params['accuracy'],general_params['device'])
-
-    print(f'test set:\nacc: {test_acc:0.2f}')
+# Import local modules
+from config import BATCH_SIZE, ACCURACY, CLASS_NUM
+from constants import SEED_NUMBER, ROOT_PATH, WEIGHT_PATH
+from utils import load_model, set_seed_and_get_device, test, load_dataloader
 
 
+def main() -> None:
+    """
+    Main function to run the testing process.
+    It initializes the model, loads the test data, and evaluates the model's
+    performance on the test set.
 
+    It prints the test accuracy to the console.
+
+    Parameters:
+    ----------
+        - None
+
+    Returns:
+    -------
+        - None
+    """
+    device: Literal["cpu", "cuda"] = set_seed_and_get_device(seed_num=SEED_NUMBER)
+
+    model, auto_transform = load_model(
+        CLASS_NUM
+    )  # model: nn.Module, auto_transform: torchvision.transforms.Compose
+
+    test_loader: DataLoader = load_dataloader(
+        root=os.path.join(ROOT_PATH, "test"),
+        transform=auto_transform,
+        batch_size=BATCH_SIZE,
+        shuffle=False,
+    )
+
+    model: nn.Module = model.to(device)
+    model.load_state_dict(torch.load(WEIGHT_PATH))
+
+    test_acc: float = test(
+        model=model, dataloader=test_loader, accuracy=ACCURACY, device=device
+    )
+
+    print(f"test set:\nacc: {test_acc:0.2f}")  # Print the test accuracy
+
+
+if __name__ == "__main__":
+    main()

@@ -1,41 +1,111 @@
-import torch, torch.nn as nn
-from torch.utils.data import DataLoader
-import torchvision as tv, torchvision.transforms as transforms
-import numpy as np
-import matplotlib.pyplot as plt
+"""
+File: explainability.py
+Author: Ali Reza (Aro) Omrani
+Email: omrani.alireza95@gmail.com
+date: 2023-10-15
+
+Description:
+-----------
+This script is used to perform explainability analysis on a pre-trained Vision
+Transformer (ViT) model for autism detection. It loads the model, reads an image,
+performs predictions, and generates explainability maps using LIME and RISE.
+
+Functions:
+----------
+- main: The main function that orchestrates the explainability process, including
+  loading the model, reading the image, generating explainability scores, and plotting
+  the results.
+
+Requirements:
+------------
+- numpy: For numerical operations.
+- torch: For model loading and tensor operations.
+"""
+
+# Import built-in libraries
 import os
-from tqdm import tqdm
-import PIL.Image as Image
-from utils import load_model, read_img, get_lime, get_rise, explainability_metric, plot_explainabilty
+from typing import Literal
 
-torch.cuda.manual_seed(1)
-torch.manual_seed(1)
-np.random.seed(1)
+# Import third-party libraries
+import numpy as np
+import torch
 
-if __name__ == '__main__':
-    #defining general variables
-    general_params = {'device':'cuda' if torch.cuda.is_available() else 'cpu',
-                  'file_path': './datasettest/autistic/001.jpg',
-                  'label':torch.ones(1,dtype=torch.int8),
-                  'weight_path': './best_model.pth'
-                  }
-    #loading model
-    model,auto_transform = load_model(2)
-    model = model.to(general_params['device'])
-    model.load_state_dict(torch.load(general_params['weight_path']))
+# Import local modules
+from config import CLASS_NUM
+from constants import ROOT_PATH, SEED_NUMBER, WEIGHT_PATH
+from utils import (
+    load_model,
+    read_img,
+    get_lime,
+    get_rise,
+    explainability_metric,
+    plot_explainabilty,
+    set_seed_and_get_device,
+)
 
-    #testing image
-    img = read_img(general_params['file_path'])
+
+def main() -> None:
+    """
+    Main function for explainability. It loads a pre-trained model, reads an image,
+    performs predictions, and generates explainability scores using LIME and RISE. It also
+    computes an explainability metric and plots the results.
+    Parameters:
+    ----------
+        - None
+    Returns:
+    -------
+        - None
+    """
+    # Setting up the environment
+    device: Literal["cpu", "cuda"] = set_seed_and_get_device(seed_num=SEED_NUMBER)
+    file_name: str = "001.jpg"
+    type_name: Literal["autistic", "non-autistic"] = "autistic"
+    file_path: str = os.path.join(ROOT_PATH, type_name, file_name)
+    label: torch.Tensor = torch.ones(
+        1, dtype=torch.int8
+    )  # 1 for autistic, 0 for non-autistic
+
+    # Loading the pre-trained model
+    model, auto_transform = load_model(
+        class_num=CLASS_NUM
+    )  # model: nn.Module, auto_transform: transforms.Compose
+    model = model.to(device)
+    model.load_state_dict(torch.load(WEIGHT_PATH))
+
+    # Reading the image and making predictions
+    img: torch.Tensor = read_img(file_path)
 
     model.eval()
-    logits = model(auto_transform(img).unsqueeze(0).to(general_params['device']))
-    preds = torch.argmax(torch.softmax(logits,dim=1),dim=1)
-    print(preds.item())
+    logits = model(auto_transform(img).unsqueeze(0).to(device))
+    preds = torch.argmax(torch.softmax(logits, dim=1), dim=1)
+    print(f"Predicted label: {preds.item()}, Actual label: {label.item()}")
 
-    lime_score = get_lime(img, model, transform = auto_transform, device = general_params['device'])
-    rise_score = get_rise(img, model, transform = auto_transform, device = general_params['device'])
+    # Explainability Part
+    # Lime Explanation
+    lime_score: np.ndarray = get_lime(
+        image=img, model=model, transform=auto_transform, device=device
+    )
 
-    #modes => del or ins
-    mode = 'del'
-    lime_metric_result, rise_metric_result = explainability_metric(model, img, auto_transform, lime_score, rise_score, mode = mode, device = general_params['device'])
-    plot_explainabilty(lime_metric_result, rise_metric_result, mode = mode)
+    # Rise Explanation
+    rise_score: np.ndarray = get_rise(
+        image=img, model=model, transform=auto_transform, device=device
+    )
+
+    # Explainability Metric
+    mode: Literal["del", "ins"] = "del"
+    lime_metric_result, rise_metric_result = explainability_metric(
+        model=model,
+        image=img,
+        transform=auto_transform,
+        lime_score=lime_score,
+        rise_score=rise_score,
+        mode=mode,
+        device=device,
+    )  # lime_metric_result: np.ndarray, rise_metric_result: np.ndarray
+
+    # Plotting the Metric Results
+    plot_explainabilty(y_lime=lime_metric_result, y_rise=rise_metric_result, mode=mode)
+
+
+if __name__ == "__main__":
+    main()
