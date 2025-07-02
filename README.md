@@ -1,6 +1,6 @@
 # Autism Detection
 ## Project Description
-This repository contains the implementation code for the paper:
+This repository contains the implementation code for the paper:  
 **Towards the Development of Explainable Machine Learning Models to Recognize the Faces of Autistic Children**
 
 This project leverages machine learning techniques to detect autism spectrum disorder (ASD) from various data sources. The goal is to build accurate and interpretable models that can assist in early diagnosis.
