@@ -61,6 +61,8 @@ def train(
         - Tuple[float, float]: The average loss and accuracy for the epoch.
     """
     model.train()
+    # Move the accuracy metric to the specified device
+    accuracy = accuracy.to(device)
     loss_lst = []
     acc_lst = []
     for batch_data in dataloader:
