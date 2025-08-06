@@ -169,6 +169,8 @@ def test(
         - float: The average accuracy of the model on the test set.
     """
     model.eval()
+    # Move the accuracy metric to the specified device
+    accuracy = accuracy.to(device)
     acc_lst = []
     with torch.inference_mode():
         for batch_data in dataloader:
