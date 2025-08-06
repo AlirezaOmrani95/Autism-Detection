@@ -13,4 +13,4 @@ lime==0.2.0.1
 scikit-image==0.23.2
 scikit-learn==1.4.0
 scipy==1.12.0
-
+Ipython
