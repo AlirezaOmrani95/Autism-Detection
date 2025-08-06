@@ -77,7 +77,6 @@ def load_dataloader(
         dataset=dataset,
         batch_size=batch_size,
         shuffle=shuffle,
-        pin_memory=True,
         num_workers=num_workers,
         pin_memory=pin_memory,
         drop_last=drop_last,
