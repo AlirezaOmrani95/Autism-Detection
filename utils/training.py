@@ -138,12 +138,17 @@ def validation(
             loss_lst.append(loss.item())
             acc_lst.append(acc.item())
 
+        current_acc = np.mean(acc_lst)
+        current_loss = np.mean(loss_lst)
+        highest_acc = current_acc  # Default to current epoch's values
+        lowest_loss = current_loss
+
         if epoch_num == 0:
-            highest_acc: float = np.mean(acc_lst)
-            lowest_loss: float = np.mean(loss_lst)
-        elif highest_acc < np.mean(acc_lst):
-            highest_acc: float = np.mean(acc_lst)
-            lowest_loss: float = np.mean(loss_lst)
+            # No need to reassign; already initialized above
+            pass
+        elif highest_acc < current_acc:
+            highest_acc = current_acc
+            lowest_loss = current_loss
             torch.save(model.state_dict(), WEIGHT_PATH)
 
     return np.mean(loss_lst), np.mean(acc_lst), highest_acc, lowest_loss
