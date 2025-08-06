@@ -114,6 +114,8 @@ def validation(
     """
 
     model.eval()  # Set the model to evaluation mode
+    # Move the accuracy metric to the specified device
+    accuracy = accuracy.to(device)
 
     # Initialize variables to track the best accuracy and loss
     loss_lst = []
