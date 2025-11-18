@@ -3,7 +3,10 @@
 This repository contains the implementation code for the paper:  
 **Towards the Development of Explainable Machine Learning Models to Recognize the Faces of Autistic Children**
 
-This project leverages machine learning techniques to detect autism spectrum disorder (ASD) from various data sources. The goal is to build accurate and interpretable models that can assist in early diagnosis.
+**This project leverages machine learning techniques to detect autism spectrum disorder (ASD) from various data sources. The goal is to build accurate and interpretable models that can assist in early diagnosis.**
+
+You can find the paper [here](https://www.emerald.com/aia/article-abstract/11/4/283/1271080/Towards-the-development-of-explainable-machine?redirectedFrom=fulltext)
+
 ---
 
 ## Features
@@ -82,12 +85,17 @@ This tool is for research and educational purposes only. It is not intended for 
 ## Citation
 If you use this code, please cite:
 ```bibtex
-@misc{omrani_lanovaz_moroni_2024,
- title={Towards the Development of Explainable Machine Learning Models to Recognize the Faces of Autistic Children},
- url={osf.io/preprints/psyarxiv/dp8kb_v1},
- DOI={10.31234/osf.io/dp8kb},
- publisher={PsyArXiv},
- author={Omrani, Ali R and Lanovaz, Marc J and Moroni, Davide},
- year={2024},
- month={Apr}
+@article{10.1108/AIA-02-2025-0018,
+    author = {Omrani, Ali Reza and Lanovaz, Marc J. and Moroni, Davide},
+    title = {Towards the development of explainable machine learning models to recognize the faces of autistic children: a brief report},
+    journal = {Advances in Autism},
+    volume = {11},
+    number = {4},
+    pages = {283-289},
+    year = {2025},
+    month = {08},    
+    issn = {2056-3868},
+    doi = {10.1108/AIA-02-2025-0018},
+    url = {https://doi.org/10.1108/AIA-02-2025-0018},
+    eprint = {https://www.emerald.com/aia/article-pdf/11/4/283/10047266/aia-02-2025-0018en.pdf},
 }
