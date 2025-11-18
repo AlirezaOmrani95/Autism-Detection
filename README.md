@@ -5,7 +5,7 @@ This repository contains the implementation code for the paper:
 
 **This project leverages machine learning techniques to detect autism spectrum disorder (ASD) from various data sources. The goal is to build accurate and interpretable models that can assist in early diagnosis.**
 
-You can find the paper [here](https://www.emerald.com/aia/article-abstract/11/4/283/1271080/Towards-the-development-of-explainable-machine?redirectedFrom=fulltext)
+You can find the paper [here](https://www.emerald.com/aia/article-abstract/11/4/283/1271080/Towards-the-development-of-explainable-machine?redirectedFrom=fulltext).
 
 ---
 
