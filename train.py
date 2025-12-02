@@ -138,14 +138,8 @@ def main() -> None:
             history["validation_loss"].append(valid_loss)
             history["validation_acc"].append(valid_acc)
 
-    plot_history(
-        train_loss=history["train_loss"],
-        train_acc=history["train_acc"],
-        valid_loss=history["validation_loss"],
-        valid_acc=history["validation_acc"],
-        highest_acc=history["highest_acc"],
-        epoch_num=EPOCHS,
-    )  # plot the training and validation history
+    # plot the training and validation history
+    plot_history(history=history, epoch_num=EPOCHS, highest_acc=history["highest_acc"])  
     write_history_to_csv(history=history)  # write the history to a CSV file
 
 
